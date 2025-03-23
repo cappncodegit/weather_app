@@ -7,16 +7,13 @@ exports.handler = async (event, context) => {
   const { lat, lon, units } = params;
   const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=${units}&appid=${WEATHER_API_KEY}`;
   try {
-    const wxStream = await fetch(url);
-    const wxJson = await wxStream.json();
+    const weatherStream = await fetch(url);
+    const weatherJson = await weatherStream.json();
     return {
       statusCode: 200,
-      body: JSON.stringify(wxJson),
+      body: JSON.stringify(weatherJson),
     };
   } catch (err) {
-    return {
-      statusCode: 422,
-      body: err.stack,
-    };
+    return { statusCode: 422, body: err.stack };
   }
 };
